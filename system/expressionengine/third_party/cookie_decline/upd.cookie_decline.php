@@ -28,7 +28,7 @@
 
 class Cookie_decline_upd {
 
-	var $version = '1.0'; 
+	var $version = '1.1'; 
 	var $ext_settings = ''; 
 	
 	function Cookie_decline_upd()
@@ -58,7 +58,13 @@ class Cookie_decline_upd {
 		$this->EE->db->insert('exp_actions', array(
 			'class' => 'Cookie_decline',
 			'method' => 'set_cookies_declined',
-		));		
+		));
+
+		// Add action
+		$this->EE->db->insert('exp_actions', array(
+			'class' => 'Cookie_decline',
+			'method' => 'set_cookies_allowed',
+		));			
 
 		// Checks if cookies are allowed before setting them
 		$this->EE->db->insert('extensions', array(
@@ -107,7 +113,17 @@ class Cookie_decline_upd {
 	 */	
 	function update($current='')
 	{
-		return TRUE;
+		if ($current == '' OR $current == $this->version)
+			return FALSE;
+
+		if ($current < '1.1')
+		{
+			// Add action
+			$this->EE->db->insert('exp_actions', array(
+				'class' => 'Cookie_decline',
+				'method' => 'set_cookies_allowed',
+			));	
+		}
 	}
 	
 }

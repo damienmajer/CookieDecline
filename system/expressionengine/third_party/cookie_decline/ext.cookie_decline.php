@@ -36,8 +36,8 @@
 class Cookie_decline_ext {
 
 	public $name = 'Cookie Decline';
-	public $version = '1.0';
-	public $settings_exist = 'y';
+	public $version = '1.1';
+	public $settings_exist = 'n';
 	public $docs_url = 'https://github.com/damienmajer/CookieDecline';
 	public $settings = array();
 

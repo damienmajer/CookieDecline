@@ -2,7 +2,7 @@
 
 * Author: [Damien Majer](http://www.damienmajer.com/)
 
-## Version 1.0
+## Version 1.1
 
 Opt-out alternative to the Cookie Consent module.
 
@@ -20,6 +20,10 @@ A huge thankyou to Ellislabs’s Robin Sowell for his assistance and ideas on ge
 
 Once installed EE will continue to set cookies by default.
 
+## Updating
+
+Replace all files and click into the module settings to update.
+
 ## Optional Template Tags
 
 ### Decline Link Tag
@@ -34,13 +38,35 @@ An example of how you might use this tag:
 
 You might want ot use this in your Cookie or Privacy Policy for example.
 
+### Allow Link Tag
+
+The following tag outputs a URL for use in a link that allows visitors to enable cookies if previously disabled.
+
+	{exp:cookie_decline:allow_link}
+
+An example of how you might use this tag:
+
+	<a href="{exp:cookie_decline:allow_link}">Allow Cookies</a>
+
+You might want ot use this in conjunction with the Check Declined tag pair to only show the allow link when cookies have been disabled, lke so:
+
+	{exp:cookie_decline:check_declined}<a href="{exp:cookie_decline:allow_link}">Allow Cookies</a>{/exp:cookie_decline:check_declined}
+
 ### Check Consent Tag
 
-This tag pair is used for wrapping around content/assets you wish to display/include dependant on whether or not cookie dropping is allowed. This could be a chuck of content or assets that set cookies themselves that you want to include, only if cookies haven’t been declined, such as the Google Analytics tracking code for example.
+This tag pair is used for wrapping around content/assets you wish to display/include dependant whether cookie dropping is allowed. This could be a chunk of content or assets that set cookies themselves that you want to include, only if cookies haven’t been declined, such as the Google Analytics tracking code for example.
 
 Example usage:
 
 	{exp:cookie_decline:check_consent}Display this when cookies haven’t been declined{/exp:cookie_decline:check_consent}
+
+### Check Delined Tag
+
+This tag pair does the opposite to the Check Consent tag pair and is used to only display content contained within when cookies have been disabled.
+
+Example usage:
+
+	{exp:cookie_decline:check_declined}Display this when cookies have been declined{/exp:cookie_decline:check_declined}
 
 ### Add Modal Tag
 
@@ -51,3 +77,15 @@ Insert this into the head of your web pages:
 	{exp:cookie_decline:add_modal}
 
 The styles for the modal can be updated in the stylesheet in the module’s theme folder.
+
+## Version Notes
+
+### Version 1.1
+
+Added Check Declined tag pair
+
+Added Allow Link tag
+
+Added close button to notification modal
+
+Removed uneccessary settings link for extension in CP

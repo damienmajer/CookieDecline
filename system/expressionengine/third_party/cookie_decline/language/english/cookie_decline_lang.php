@@ -29,6 +29,12 @@ $lang = array(
 'cp_cookie_message_label' =>
 'Cookie alert message',
 
+'cookies_allowed' =>
+'Cookies allowed',
+
+'cookies_allowed_description' =>
+'Future setting of cookies successfully enabled.',
+
 
 ''=>''
 );

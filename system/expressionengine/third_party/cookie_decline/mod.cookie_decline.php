@@ -129,11 +129,88 @@ class Cookie_decline {
 
 		$this->EE->output->show_message($data);		
 	}
+
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Create cookies allowed link
+	 *
+	 * @access	public
+	 * @return	string
+	 *
+	 */
+	public function allow_link()
+	{
+		$link = $this->EE->functions->fetch_site_index(0, 0).QUERY_MARKER.'ACT='
+			.$this->EE->functions->fetch_action_id('Cookie_decline', 'set_cookies_allowed');
+
+		$link .= AMP.'RET='.$this->EE->uri->uri_string();	
+		
+		return $link;		
+	}
+
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Set the 'cookies_allowed' cookie
+	 *
+	 * @access	public
+	 * @return	string
+	 *
+	 */
+	public function set_cookies_allowed()
+	{
+		$this->EE->lang->loadfile('cookie_decline');
+
+		// Load cookie helper
+		$this->EE->load->helper('cookie');
+		$prefix = ( ! $this->EE->config->item('cookie_prefix')) ? 
+			'exp_' : $this->EE->config->item('cookie_prefix').'_';
+		$prefix_length = strlen($prefix);
+
+		setcookie("exp_cookies_declined", "", time()-3600);
+
+		$this->EE->functions->set_cookie('cookies_allowed', 'y', $expires);
+
+		$ret = ($this->EE->input->get('RET')) ? $this->EE->input->get('RET') : '';
+		$return_link = $this->EE->functions->create_url($ret);
+
+		// Send them a success message and redirect link
+		$data = array(
+			'title' 	=> lang('cookies_allowed'),
+			'heading'	=> lang('cookies_allowed'),
+			'content'	=> lang('cookies_allowed_description'),
+			'redirect'	=> $return_link,
+			'link'		=> array($return_link, lang('cookies_declined_return_to_page')),
+			'rate'		=> 3
+		);
+
+		$this->EE->output->show_message($data);
+	}
 	
 	
 	public function check_consent()
 	{ 		
 		if ($this->EE->input->cookie('cookies_allowed') == 'y' || $this->EE->input->cookie('cookies_declined') != 'y')
+		{
+		
+			$this->return_data = $this->EE->TMPL->tagdata;
+			
+		} else {
+			
+			$this->return_data = "";
+			
+		}
+		
+		return $this->return_data;
+	}
+
+
+	public function check_declined()
+	{ 		
+		if ($this->EE->input->cookie('cookies_declined') == 'y')
 		{
 		
 			$this->return_data = $this->EE->TMPL->tagdata;
@@ -175,7 +252,11 @@ class Cookie_decline {
 			}
 			$this->return_data .= "<script>
 							   function init() {
-							       $('body').append('<div id=\"cookie_decline\"><p><strong>Cookie Policy</strong></p><p>".$message."</p><p><a href=\"".$link."\">Disallow cookies</a></div>');
+							       $('body').append('<div id=\"cookie_decline\"><p><strong>Cookie Policy</strong></p><p>".$message."</p><p><a href=\"".$link."\">Disallow cookies</a><a href=\"#\" class=\"cd_close\"></a></div>');
+							       $('.cd_close').click(function(e){
+							       		$('#cookie_decline').remove();
+							       		e.preventDefault();
+							       })
 							       $('#cookie_decline').css({'bottom':'-'+$(this).height()}).animate({
     								   bottom: '30px'
   								   }, 2000).delay(8000).animate({
