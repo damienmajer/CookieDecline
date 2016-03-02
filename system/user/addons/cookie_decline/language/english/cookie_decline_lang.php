@@ -35,9 +35,18 @@ $lang = array(
 'cookies_allowed_description' =>
 'Future setting of cookies successfully enabled.',
 
+'general_settings' =>
+'General Settings',
+
+'success' =>
+'Success',
+
+'cookie_decline_settings_updated' =>
+'Cookie Decline Settings Updated',
+
 
 ''=>''
 );
 
-/* End of file cookie_consent_lang.php */
-/* Location: ./system/expressionengine/third_party/cookie_decline/language/english/cookie_decline_lang.php */
+/* End of file cookie_decline_lang.php */
+/* Location: ./system/user/addons/cookie_decline/language/english/cookie_decline_lang.php */

@@ -2,7 +2,7 @@
 
 * Author: [Damien Majer](http://www.damienmajer.com/)
 
-## Version 1.1
+## Version 2.0.0
 
 Opt-out alternative to the Cookie Consent module.
 
@@ -14,9 +14,9 @@ A huge thankyou to Ellislabs’s Robin Sowell for his assistance and ideas on ge
 
 ## Installation
 
-1. Copy the cookie_decline addon folder to ./system/expressionengine/third_party/
-1. Copy the cookie_decline themes folder to ./themes/third_party/
-3. In EE, browse to Add-ons > Modules and click the 'Install' link for the Cookie Decline module and install both the module and the extension
+1. Copy the cookie_decline addon folder to ./system/user/addons/
+1. Copy the cookie_decline themes folder to ./themes/user/addons/
+3. In EE, browse to Developer Tools > Add-On Manager and click the 'Install' link for the Cookie Decline add-on
 
 Once installed EE will continue to set cookies by default.
 
@@ -79,6 +79,10 @@ Insert this into the head of your web pages:
 The styles for the modal can be updated in the stylesheet in the module’s theme folder.
 
 ## Version Notes
+
+### Version 2.0.0
+
+Upgraded for ExpressionEngine 3
 
 ### Version 1.1
 

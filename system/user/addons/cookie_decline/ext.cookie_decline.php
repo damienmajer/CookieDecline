@@ -36,7 +36,7 @@
 class Cookie_decline_ext {
 
 	public $name = 'Cookie Decline';
-	public $version = '1.1';
+	public $version = '2.0.0';
 	public $settings_exist = 'n';
 	public $docs_url = 'https://github.com/damienmajer/CookieDecline';
 	public $settings = array();
@@ -75,16 +75,16 @@ class Cookie_decline_ext {
 	public function check_cookie_permission($data)
 	{
 		//We'll take over all cookie setting
-		$this->EE->extensions->end_script = TRUE;
+		ee()->extensions->end_script = TRUE;
 
-		if ($this->EE->input->cookie('cookies_declined') == 'y')
+		if (ee()->input->cookie('cookies_declined') == 'y')
 		{
 			return;
 		}
 
 		// Cookies are not declined, so set them.
 
-		if ( ! $this->EE->input->cookie('cookies_allowed') && $data['name'] != 'cookies_allowed')
+		if ( ! ee()->input->cookie('cookies_allowed') && $data['name'] != 'cookies_allowed')
 		{
 			$exp = time() + 60*60*24*365;  // 1 year
 			setcookie($data['prefix'].'cookies_allowed','y', $exp, $data['path'], $data['domain'], $data['secure_cookie']);			
@@ -94,21 +94,6 @@ class Cookie_decline_ext {
 	}
 	
 	// --------------------------------------------------------------------
-	
-	/**
- 	* Settings
- 	*
- 	* @param   Array   Settings
- 	* @return  void
- 	*/
-	function settings_form($current)
-	{
-		// Let's just send them to the module's page
-        $this->EE->functions->redirect(
-            BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=cookie_decline'
-    	);		
-	}
-
 
 	/**
  	* Activate Extension
@@ -128,4 +113,4 @@ class Cookie_decline_ext {
 }
 
 /* End of file ext.cookie_decline.php */
-/* Location: ./system/expressionengine/third_party/cookie_decline/ext.cookie_decline.php */
+/* Location: ./system/user/addons/cookie_decline/ext.cookie_decline.php */

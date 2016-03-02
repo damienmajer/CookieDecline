@@ -22,7 +22,7 @@
 }
 #cookie_decline a.cd_close {
 	border-bottom: none;
-	background: url("/themes/third_party/cookie_decline/images/close.png") no-repeat;
+	background: url("/themes/user/addons/cookie_decline/images/close.png") no-repeat;
 	width: 30px;
 	height: 30px;
 	position: absolute;

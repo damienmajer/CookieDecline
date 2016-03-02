@@ -28,7 +28,7 @@
 
 class Cookie_decline_upd {
 
-	var $version = '1.1'; 
+	var $version = '2.0.0'; 
 	var $ext_settings = ''; 
 	
 	function Cookie_decline_upd()
@@ -46,28 +46,31 @@ class Cookie_decline_upd {
 	 */	
 	function install()
 	{	
+		// Load dbforge
+		ee()->load->dbforge();
 		
 		// Add Module
-		$this->EE->db->insert('modules', array(
+		ee()->db->insert('modules', array(
 			'module_name'    => 'Cookie_decline',
 			'module_version'     => $this->version,
-			'has_cp_backend'   => 'y'
+			'has_cp_backend'   => 'y',
+			'has_publish_fields'	=> 'n'
 		));
 
 		// Add action
-		$this->EE->db->insert('exp_actions', array(
+		ee()->db->insert('actions', array(
 			'class' => 'Cookie_decline',
 			'method' => 'set_cookies_declined',
 		));
 
 		// Add action
-		$this->EE->db->insert('exp_actions', array(
+		ee()->db->insert('exp_actions', array(
 			'class' => 'Cookie_decline',
 			'method' => 'set_cookies_allowed',
 		));			
 
 		// Checks if cookies are allowed before setting them
-		$this->EE->db->insert('extensions', array(
+		ee()->db->insert('extensions', array(
 			'class'    => 'Cookie_decline_ext',
 			'hook'     => 'set_cookie_end',
 			'method'   => 'check_cookie_permission',
@@ -90,15 +93,15 @@ class Cookie_decline_upd {
 	 */
 	function uninstall()
 	{
-		$query = $this->EE->db->query("SELECT module_id FROM exp_modules WHERE module_name = 'Cookie_decline'"); 
-				
-		$this->EE->db->delete('module_member_groups', array('module_id' => $query->row('module_id')));
-		$this->EE->db->delete('modules', array('module_name' => 'Cookie_decline'));
-		$this->EE->db->delete('actions', array('class' => 'Cookie_decline'));
-		
+		ee()->load->dbforge();
+
+		$query = ee()->db->query("SELECT module_id FROM exp_modules WHERE module_name = 'Cookie_decline'"); 	
+		ee()->db->delete('module_member_groups', array('module_id' => $query->row('module_id')));
+		ee()->db->delete('modules', array('module_name' => 'Cookie_decline'));
+		ee()->db->delete('actions', array('class' => 'Cookie_decline'));
 		
 		// Disable extension
-		$this->EE->db->delete('extensions', array('class' => 'Cookie_decline_ext'));
+		ee()->db->delete('extensions', array('class' => 'Cookie_decline_ext'));
 
 		return TRUE;
 	}
@@ -116,10 +119,13 @@ class Cookie_decline_upd {
 		if ($current == '' OR $current == $this->version)
 			return FALSE;
 
+		// Load DB Forge
+		ee()->load->dbforge();
+
 		if ($current < '1.1')
 		{
 			// Add action
-			$this->EE->db->insert('exp_actions', array(
+			ee()->db->insert('actions', array(
 				'class' => 'Cookie_decline',
 				'method' => 'set_cookies_allowed',
 			));	
@@ -130,4 +136,4 @@ class Cookie_decline_upd {
 /* END Class */
 
 /* End of file upd.cookie_decline.php */
-/* Location: ./system/expressionengine/third_party/cookie_decline/upd.cookie_decline.php */
+/* Location: ./system/user/addons/cookie_decline/upd.cookie_decline.php */
